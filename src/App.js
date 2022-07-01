@@ -1,23 +1,27 @@
-import logo from './logo.svg';
 import './App.css';
+import dataBoxes from './Components/DataBoxes'
+import {useState} from 'react'
+import Box from './Components/Box';
 
 function App() {
+
+const [boxes,setBoxes]=useState(dataBoxes)
+
+
+const boxesElement=boxes.map(box=>(
+  <Box key={box.id} id={box.id} on={box.on} letter={box.letter} clicked={handleClick}/>
+))
+
+function handleClick(id){
+
+  setBoxes(prevBoxes => prevBoxes.map(b=>{ return b.id===id?{...b,on:!b.on}:b}))
+}
+
+
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      {boxesElement}
     </div>
   );
 }
